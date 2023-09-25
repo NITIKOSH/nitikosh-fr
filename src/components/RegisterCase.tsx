@@ -1,6 +1,10 @@
 import React from 'react'
 import PrimaryButton from './ui/Buttons/PrimaryButton'
 import SecondaryButton from './ui/Buttons/SecondaryButton'
+import Step1 from './Forms/Step1'
+import Step3 from './Forms/Step3'
+import Step2 from './Forms/Step2'
+import Step0 from './Forms/Step0'
 
 const RegisterCase = () => {
 	const [steps, setSteps] = React.useState(0)
@@ -51,7 +55,9 @@ const RegisterCase = () => {
 						/>
 					</svg>
 				</div>
-				<div className='h-full w-full bg-gray-100'>gfmd</div>
+				<div className='h-full w-full bg-gray-100'>
+					<Step1/>
+				</div>
 				<div className='h-20 w-full border-t-[1px] flex gap-4 items-center justify-end p-4'>
 					<div className='h-full w-24'>
 						<SecondaryButton

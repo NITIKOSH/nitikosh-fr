@@ -2,31 +2,21 @@ import ReactDOM from 'react-dom'
 import { useForm, SubmitHandler } from 'react-hook-form'
 
 interface IFormInput {
-	caseName: string
-	caseNumber: string
-
-	caseType: string
+	evidVideo: string
+	evidImage: string
+    docName : string
+	docType: string
 }
 import Nav from './Nav'
 
-function Step1() {
+function Step2() {
 	const { register, handleSubmit } = useForm<IFormInput>()
 	const onSubmit: SubmitHandler<IFormInput> = (data) => console.log(data)
 	return (
 		<div>
 			<Nav />
 			<form onChange={handleSubmit(onSubmit)}>
-				<input
-					{...register('caseName')}
-					placeholder='Enter Case Name'
-				/>
-
-				<input
-					{...register('caseNumber')}
-					placeholder='Enter Case Number'
-					// type='number'
-				/>
-				<select {...register('caseType')} defaultValue=''>
+				<select {...register('docType')} defaultValue=''>
 					<option value='' disabled>
 						Select Case Type...
 					</option>
@@ -34,9 +24,23 @@ function Step1() {
 					<option value='criminal'>Criminal</option>
 					<option value='other'>Others</option>
 				</select>
+				<input
+					{...register('docName')}
+					placeholder='Enter Document Name'
+				/>
+				<input
+					{...register('evidVideo')}
+					placeholder='Upload evidence Video'
+				/>
+
+				<input
+					{...register('evidImage')}
+					placeholder='Upload evidence Image'
+					// type='number'
+				/>
 			</form>
 		</div>
 	)
 }
 
-export default Step1
+export default Step2
