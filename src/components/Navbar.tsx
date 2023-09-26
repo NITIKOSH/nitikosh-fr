@@ -1,5 +1,6 @@
 'use client'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import Image from 'next/image'
 import { identicon, logo, search, wallent } from '@/assets'
 import { useCallback, useState } from 'react'
@@ -12,6 +13,7 @@ export interface AccountType {
 	network?: string
 }
 const Navbar = () => {
+	const router = useRouter()
 	const [accountData, setAccountData] = useState<Web3State>()
 	const web3state = useWeb3State()
 
@@ -20,7 +22,10 @@ const Navbar = () => {
 			.then(() => {
 				return web3state
 			})
-			.then((data) => setAccountData(data))
+			.then((data) => {
+				setAccountData(data);
+				router.push('/dashboard')
+			})
 			.catch((err) => console.log(err))
 	}
 

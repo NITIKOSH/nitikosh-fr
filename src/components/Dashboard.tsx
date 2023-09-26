@@ -1,14 +1,16 @@
 'use client'
 import React from 'react'
 import RegisterCase from './RegisterCase'
+import { Navbar } from '.'
 
 const Dashboard = () => {
-	const [open, setOpen] = React.useState<boolean>(true)
+	const [open, setOpen] = React.useState<boolean>(false)
 	return (
 		<>
-			<div className='h-[calc(100vh-80px)] w-full p-10'>
+			<Navbar/> 
+			<div className='h-[calc(100vh-80px)] w-full py-16 px-32'>
 				<div className='flex flex-col gap-2'>
-					<div className='text-4xl font-medium font-lato text-[#211D3D]'>
+					<div className='text-3xl font-medium font-lato text-[#211D3D]'>
 						Welcome to Dashboard
 					</div>
 					<p className='leading-normal text-gray-400'>
@@ -17,7 +19,7 @@ const Dashboard = () => {
 						facilitating easy access and management of their content
 					</p>
 					<div className='relative h-[500px] mt-4 w-full shadow-xl font-poppins rounded-md flex flex-col gap-4 items-center justify-center'>
-						<div>
+						<div className='cursor-pointer'>
 							<svg
 								width='179'
 								height='178'
@@ -53,14 +55,14 @@ const Dashboard = () => {
 								</defs>
 							</svg>
 						</div>
-						<p className='text-[#565973]'>
+						<p className='text-[#565973] text-base'>
 							The Dashboard summarizes the list of already minted
 							cases.
 						</p>
 						<div className='border-[1px] border-[#56597399] text-[#0B0F19] rounded-md text-xl p-2 px-4'>
 							Learn more
 						</div>
-						<div className='absolute flex items-center justify-center bottom-4 right-4 h-12 w-12 rounded-full bg-[#7665EE]'>
+						<div className='absolute cursor-pointer flex items-center justify-center bottom-4 right-4 h-12 w-12 rounded-full bg-[#7665EE]' onClick={()=>setOpen(true)} >
 							<svg
 								width='20'
 								height='20'
@@ -88,8 +90,7 @@ const Dashboard = () => {
 					</div>
 				</div>
 			</div>
-
-			{open && <RegisterCase />}
+			{open && <RegisterCase setOpen = {setOpen} />}
 		</>
 	)
 }

@@ -8,10 +8,8 @@ interface IFormInput {
 const Step0: React.FC = () => {
 	const { register, watch } = useForm<IFormInput>()
 
-	// Watch the value of the selected radio button
 	const selectedOption = watch('optData')
 
-	// Function to handle the value change
 	const handleChange = () => {
 		console.log(selectedOption)
 	}

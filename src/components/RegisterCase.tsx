@@ -1,18 +1,22 @@
 import React from 'react'
 import PrimaryButton from './ui/Buttons/PrimaryButton'
 import SecondaryButton from './ui/Buttons/SecondaryButton'
+import  { Dispatch, SetStateAction } from 'react'
 import Step1 from './Forms/Step1'
 import Step3 from './Forms/Step3'
 import Step2 from './Forms/Step2'
 import Step0 from './Forms/Step0'
 
-const RegisterCase = () => {
+type RegisterCaseProps = {
+	setOpen: Dispatch<SetStateAction<boolean>>
+}
+const RegisterCase: React.FC<RegisterCaseProps> = ({setOpen}) => {
 	const [steps, setSteps] = React.useState(0)
 
 	return (
 		<div className='absolute top-20 h-[calc(100vh-80px)] w-full z-20 flex items-center justify-center bg-[#211D3D80]'>
 			<div className='h-5/6 w-4/5 shadow-xl rounded-xl bg-white overflow-hidden flex flex-col'>
-				<div className='h-16 w-full flex justify-between items-center p-2 px-4 bg-purple text-white stroke-white'>
+				<div className='h-16 w-full flex justify-between items-center p-2 px-4 bg-purple text-white stroke-white cursor-pointer'onClick={() => setOpen(false)}>
 					<svg
 						width='28'
 						height='28'
@@ -55,8 +59,8 @@ const RegisterCase = () => {
 						/>
 					</svg>
 				</div>
-				<div className='h-full w-full bg-gray-100'>
-					<Step1/>
+				<div className='h-full w-full '>
+					<Step3 />
 				</div>
 				<div className='h-20 w-full border-t-[1px] flex gap-4 items-center justify-end p-4'>
 					<div className='h-full w-24'>
