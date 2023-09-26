@@ -1,13 +1,13 @@
 import React from 'react'
 
-type x = {
-	children: any
-	onClick: any
-	classes: any
-	props: any
-}
+interface PrimaryButtonProps {
+	children: React.ReactNode;
+	onClick?: () => void;
+	classes?: string;
+	type?: 'button' | 'submit' | 'reset';
+  }
 
-const PrimaryButton: React.FC<x> = ({
+const PrimaryButton: React.FC<PrimaryButtonProps> = ({
 	children,
 	onClick,
 	classes,

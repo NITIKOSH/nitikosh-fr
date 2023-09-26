@@ -1,13 +1,12 @@
 import React from 'react'
 
-type x = {
-	children: any
-	onClick: any
-	classes: any
-	props: any
-}
+interface SecondaryButtonProps {
+	children: React.ReactNode;
+	onClick?: () => void;
+	classes?: string;
+  }
 
-const SecondaryButton: React.FC<x> = ({
+const SecondaryButton: React.FC<SecondaryButtonProps> = ({
 	children,
 	onClick,
 	classes,

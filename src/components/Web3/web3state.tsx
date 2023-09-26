@@ -1,14 +1,52 @@
 import { ethers } from "ethers";
 import contractABI from "../../abis/Nitikosh.json";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
-// func to connect the wallet
 export async function connectWallet() {
+  
   if (window.ethereum) {
     try {
+      const chainId = await window.ethereum.request({ method: "eth_chainId" });
+
+      const desiredChainId = "0x13881"; // 0x followed by hexadecimal chain ID
+
+      if (chainId !== desiredChainId) {
+        // Switch to the desired network
+        await window.ethereum.request({
+          method: "wallet_switchEthereumChain",
+          params: [{ chainId: desiredChainId }],
+        });
+      }
       // Request access to the user's accounts
       await window.ethereum.request({ method: "eth_requestAccounts" });
       console.log("Wallet connected!");
+
+      const provider = new ethers.providers.Web3Provider(window.ethereum);
+      const signer = provider.getSigner();
+
+      // Create a contract instance
+      const contractAddress = process.env.NEXT_PUBLIC_CONT_ADD!;
+      const contract = new ethers.Contract(
+        contractAddress,
+        contractABI,
+        signer
+      );
+      // console.log("contract",contract);
+
+      let accounts = await provider.send("eth_requestAccounts", []);
+      let userAddress: string = accounts[0];
+
+      // Update the web3 state
+      
+      console.log(userAddress);
+
+      return {
+        provider,
+        signer,
+        contract,
+        userAdd: userAddress,
+      };
+
     } catch (error) {
       console.error("Failed to connect wallet:", error);
     }
@@ -17,63 +55,11 @@ export async function connectWallet() {
   }
 }
 
-export interface Web3State {
+export interface Web3State{
   provider: ethers.providers.Web3Provider | undefined;
   signer: ethers.Signer | undefined;
   contract: ethers.Contract | undefined;
   userAdd: string | undefined;
-}
-
-// initialize the web3 componets
-export function useWeb3State(): Web3State {
-  const [web3State, setWeb3State] = useState<Web3State>({
-    provider: undefined,
-    signer: undefined,
-    contract: undefined,
-    userAdd: "",
-  });
-
-  useEffect(() => {
-    const initializeWeb3 = async () => {
-      try {
-        // Check if MetaMask is installed
-        if (window.ethereum) {
-          const provider = new ethers.providers.Web3Provider(window.ethereum);
-          const signer = provider.getSigner();
-
-          // Create a contract instance
-          const contractAddress = process.env.NEXT_PUBLIC_CONT_ADD!;
-          const contract = new ethers.Contract(
-            contractAddress,
-            contractABI,
-            signer
-          );
-          // console.log("contract",contract);
-
-          let accounts = await provider.send("eth_requestAccounts", []);
-          let userAddress: string = accounts[0];
-
-          // Update the web3 state
-          setWeb3State({
-            provider,
-            signer,
-            contract,
-            userAdd: userAddress,
-          });
-
-          console.log(userAddress);
-        } else {
-          console.error("No wallet found!");
-        }
-      } catch (error) {
-        console.error("Failed to initialize web3:", error);
-      }
-    };
-
-    initializeWeb3();
-  }, []);
-
-  return web3State;
 }
 
 // Mint/register a new case

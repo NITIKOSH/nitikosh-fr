@@ -1,6 +1,6 @@
 import React from 'react'
-import PrimaryButton from './ui/Buttons/PrimaryButton'
-import SecondaryButton from './ui/Buttons/SecondaryButton'
+import PrimaryButton from './ui/buttons/PrimaryButton'
+import SecondaryButton from './ui/buttons/SecondaryButton'
 import { Dispatch, SetStateAction } from 'react'
 import Step1 from './Forms/Step1'
 import Step3 from './Forms/Step3'
@@ -10,7 +10,7 @@ import Nav from './Forms/Nav'
 import { useForm } from 'react-hook-form'
 
 type RegisterCaseProps = {
-	setOpen: Dispatch<SetStateAction<boolean>>
+	setOpen: Dispatch<SetStateAction<boolean>>,
 }
 const RegisterCase: React.FC<RegisterCaseProps> = ({ setOpen }) => {
 	const [steps, setSteps] = React.useState(0)

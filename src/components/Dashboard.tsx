@@ -5,9 +5,9 @@ import { Navbar } from '.'
 
 const Dashboard = () => {
 	const [open, setOpen] = React.useState<boolean>(false)
+
 	return (
 		<>
-			<Navbar/> 
 			<div className='h-[calc(100vh-80px)] w-full py-16 px-32'>
 				<div className='flex flex-col gap-2'>
 					<div className='text-3xl font-medium font-lato text-[#211D3D]'>

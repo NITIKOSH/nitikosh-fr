@@ -3,30 +3,25 @@ import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import Image from 'next/image'
 import { identicon, logo, search, wallent } from '@/assets'
-import { useCallback, useState } from 'react'
+import { useState } from 'react'
 import { ethers } from 'ethers'
-import { connectWallet, useWeb3State, Web3State } from './Web3/web3state'
-export interface AccountType {
-	address?: string
-	balance?: string
-	chainId?: string
-	network?: string
+import { connectWallet,Web3State } from './Web3/web3state'
+
+export interface web3DataType {
+	provider: ethers.providers.Web3Provider | undefined;
+	signer: ethers.Signer | undefined;
+	contract: ethers.Contract | undefined;
+	userAdd: string | undefined;
 }
+
 const Navbar = () => {
 	const router = useRouter()
-	const [accountData, setAccountData] = useState<Web3State>()
-	const web3state = useWeb3State()
+	const [web3Data, setWeb3Data] = useState<Web3State>()
 
-	const handleConnect = () => {
-		connectWallet()
-			.then(() => {
-				return web3state
-			})
-			.then((data) => {
-				setAccountData(data);
-				router.push('/dashboard')
-			})
-			.catch((err) => console.log(err))
+	const handleConnect = async () => {
+		let _web3Data = await connectWallet();
+		setWeb3Data(_web3Data);
+		router.push('/dashboard');
 	}
 
 	return (
@@ -71,7 +66,7 @@ const Navbar = () => {
 						/>
 					</form>
 					<div>
-						{accountData?.userAdd ? (
+						{web3Data?.userAdd ? (
 							<>
 								<div className='flex gap-3 items-center'>
 									<svg
@@ -145,10 +140,10 @@ const Navbar = () => {
 
 									<span className='text-[#332885] text-sm'>
 										...
-										{accountData?.userAdd
+										{web3Data?.userAdd
 											.slice(
-												accountData?.userAdd.length - 4,
-												accountData?.userAdd.length
+												web3Data?.userAdd.length - 4,
+												web3Data?.userAdd.length
 											)
 											.toUpperCase()}
 									</span>
