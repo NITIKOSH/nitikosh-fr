@@ -1,29 +1,19 @@
-import ReactDOM from 'react-dom'
 import { useForm, SubmitHandler } from 'react-hook-form'
 import { iIcon } from '@/assets'
-
+import React from 'react'
 import Nav from './Nav'
 import Image from 'next/image'
-import React from 'react'
-interface IFormInput {
-	caseName: string
-	caseNumber: string
-
-	caseType: string
+type RegisterCaseProps = {
+	register: any
+	watch: any
 }
 
-function Step1() {
+const Step1: React.FC<RegisterCaseProps> = ({ register, watch }) => {
 	const [showTooltip, setShowTooltip] = React.useState(false)
 	const [showTooltip2, setShowTooltip2] = React.useState(false)
-	const { register, handleSubmit } = useForm<IFormInput>()
-	const onSubmit: SubmitHandler<IFormInput> = (data) => console.log(data)
 	return (
 		<div className=''>
-			<Nav />
-			<form
-				onChange={handleSubmit(onSubmit)}
-				className='flex flex-col h-full w-[80%] mx-auto  justify-center items-center space-y-8 mt-20'
-			>
+			<div className='flex flex-col h-full w-[80%] mx-auto  justify-center items-center space-y-8 mt-20'>
 				<div className='border border-1 px-8 py-4 w-full mx-auto rounded-xl flex relative'>
 					<input
 						{...register('caseName')}
@@ -41,7 +31,8 @@ function Step1() {
 					/>
 					{showTooltip && (
 						<div className=' text-xs  font-extralight px-2 py-1 shadow bg-white rounded absolute right-10 top-10 z-10 text-[#00000067]'>
-							Provide a descriptive and <br /> concise title for the case
+							Provide a descriptive and <br /> concise title for
+							the case
 						</div>
 					)}
 				</div>
@@ -63,8 +54,8 @@ function Step1() {
 						/>
 						{showTooltip2 && (
 							<div className='  text-xs  font-extralight text-[#00000067] px-2 py-1 shadow bg-white rounded absolute right-10 top-10 z-10'>
-								Enter unique identification <br /> number assigned to
-								the case
+								Enter unique identification <br /> number
+								assigned to the case
 							</div>
 						)}
 					</div>
@@ -83,7 +74,7 @@ function Step1() {
 						</select>
 					</div>
 				</div>
-			</form>
+			</div>
 		</div>
 	)
 }

@@ -1,13 +1,14 @@
 import React from 'react'
 import { useForm, SubmitHandler } from 'react-hook-form'
+import { Dispatch, SetStateAction } from 'react'
 
-interface IFormInput {
-	optData: ''
+type RegisterCaseProps = {
+	setCase: Dispatch<SetStateAction<String>>
+	register: any
+	watch: any
 }
 
-const Step0: React.FC = () => {
-	const { register, watch } = useForm<IFormInput>()
-
+const Step0: React.FC<RegisterCaseProps> = ({ setCase, register, watch }) => {
 	const selectedOption = watch('optData')
 
 	const handleChange = () => {
@@ -19,7 +20,10 @@ const Step0: React.FC = () => {
 			<div className='text-xl  font-medium'>
 				Please choose an option to proceed
 			</div>
-			<form onChange={handleChange} className=' mt-16  justify-center items-center'>
+			<form
+				onChange={handleChange}
+				className=' mt-16  justify-center items-center'
+			>
 				<label>
 					<div className='flex border border-[#211d3d23] px-6 py-4 rounded-xl space-x-4'>
 						<input

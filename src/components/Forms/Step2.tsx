@@ -3,25 +3,19 @@ import Image from 'next/image'
 import React from 'react'
 import { useForm, SubmitHandler } from 'react-hook-form'
 
-interface IFormInput {
-	evidVideo: string
-	evidImage: string
-    docName : string
-	docType: string
-}
-import Nav from './Nav'
 import { iIcon } from '@/assets'
+type RegisterCaseProps = {
+	register: any
+	watch: any
+}
 
-function Step2() {
+const Step2: React.FC<RegisterCaseProps> = ({ register, watch }) => {
 	const [showTooltip, setShowTooltip] = React.useState(false)
 	const [showTooltip2, setShowTooltip2] = React.useState(false)
-	const { register, handleSubmit } = useForm<IFormInput>()
-	const onSubmit: SubmitHandler<IFormInput> = (data) => console.log(data)
 	return (
 		<div>
-			<Nav />
 			<div className='w-[80%]   mx-auto flex flex-col space-y-12  '>
-				<form onChange={handleSubmit(onSubmit)} className='space-y-12 mt-12'>
+				<div className='space-y-12 mt-12'>
 					{/* //////////// */}
 					<div className=' flex flex-row w-full space-x-6'>
 						<div className='basis-2/5  text-[#211d3d72] shadow-lg rounded-xl  outline-none px-4'>
@@ -42,7 +36,8 @@ function Step2() {
 							<input
 								{...register('docName')}
 								placeholder='Enter Document Name'
-								className='outline-none w-full bg-transparent text-[#211d3d72] font-open-sans font-light'
+								className='outline-none w-full bg-transparent text-[#211d3d72] font-open-sans font-light '
+								type='file'
 							/>
 							<Image
 								src={iIcon}
@@ -76,6 +71,7 @@ function Step2() {
 							{...register('evidVideo')}
 							placeholder='Upload evidence Video'
 							className='outline-none w-full bg-transparent text-[#211d3d72] font-open-sans font-light'
+							type='file'
 						/>
 						<Image
 							src={iIcon}
@@ -105,6 +101,7 @@ function Step2() {
 							{...register('evidImage')}
 							placeholder='Upload evidence Image'
 							className='outline-none w-full bg-transparent text-[#211d3d72] font-open-sans font-light'
+							type='file'
 						/>
 						<Image
 							src={iIcon}
@@ -122,7 +119,7 @@ function Step2() {
 							</div>
 						)}
 					</div>
-				</form>
+				</div>
 			</div>
 		</div>
 	)

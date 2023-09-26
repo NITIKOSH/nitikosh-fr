@@ -1,23 +1,21 @@
 // Date: 09/04/21
 import { useForm, SubmitHandler } from 'react-hook-form'
 import Image from 'next/image'
-interface IFormInput {
-	caseDesc: string
-	addInfo: string
-}
-import Nav from './Nav'
+
 import { iIcon } from '@/assets'
 import React from 'react'
 
-function Step3() {
+type RegisterCaseProps = {
+	register: any
+	watch: any
+}
+
+const Step3: React.FC<RegisterCaseProps> = ({ register, watch }) => {
 	const [showTooltip, setShowTooltip] = React.useState(false)
 	const [showTooltip2, setShowTooltip2] = React.useState(false)
-	const { register, handleSubmit } = useForm<IFormInput>()
-	const onSubmit: SubmitHandler<IFormInput> = (data) => console.log(data)
 	return (
 		<div>
-			<Nav />
-			<form onChange={handleSubmit(onSubmit)} className='w-[80%] mx-auto space-y-4 mt-12'>
+			<div className='w-[80%] mx-auto space-y-4 mt-12'>
 				{/* <textarea
 					rows={4} // Number of rows
 					cols={50}
@@ -81,7 +79,7 @@ function Step3() {
 					)}
 				</div>
 				{/* /// */}
-			</form>
+			</div>
 		</div>
 	)
 }
