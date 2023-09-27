@@ -8,7 +8,7 @@ import Step3 from './Forms/Step3'
 import Step0 from './Forms/Step0'
 import Nav from './Forms/Nav'
 import { useForm } from 'react-hook-form'
-import { useWeb3State, mintCase } from './Web3/web3state'
+import { useWeb3State, mintCase, mintSubCase } from './Web3/web3state'
 import { pinFileToIPFS, pinJSONToIPFS } from './Web3/pinata'
 
 type RegisterCaseProps = {
@@ -25,7 +25,10 @@ const RegisterCase: React.FC<RegisterCaseProps> = ({ setOpen }) => {
 		handleSubmit,
 		formState: { errors },
 		watch,
-	} = useForm()
+		reset,
+	} = useForm({
+		mode: 'onChange',
+	})
 
 	const formData = watch()
 
@@ -39,10 +42,16 @@ const RegisterCase: React.FC<RegisterCaseProps> = ({ setOpen }) => {
 		if (steps === 3) return
 		if (steps == 1) {
 			if (
-				formData.caseType === '' ||
-				formData.caseType === undefined ||
-				formData.caseName === '' ||
-				formData.caseNumber === ''
+				formData.optData === 'new' &&
+				(formData.caseType === '' ||
+					formData.caseType === undefined ||
+					formData.caseName === '' ||
+					formData.caseNumber === '')
+			) {
+				return
+			} else if (
+				formData.optData === 'new' &&
+				(formData.caseId === '' || formData.caseId === undefined)
 			) {
 				return
 			} else {
@@ -83,18 +92,38 @@ const RegisterCase: React.FC<RegisterCaseProps> = ({ setOpen }) => {
 		}
 	}
 
+	const handleExistingMint = async (pinnedData: any) => {
+		if (!signer || !contract) {
+			console.error('Signer or contract is undefined')
+			return
+		}
+
+		try {
+			// Mint the NFT
+			const mintedId = await mintSubCase(
+				{ provider, signer, contract, userAdd },
+				pinnedData.caseId,
+				pinnedData
+			)
+			console.log('New Case Initiated with NFTID ', mintedId)
+		} catch (error) {
+			console.error('Failed to mint NFT:', error)
+		}
+	}
+
 	const onSubmit = async (data: any) => {
 		console.log(data)
 		if (!data.caseDesc) return // if caseDes is empty return
 		if (contract) {
 			// if condition that caseID is in data or not accordingly func call happen
 			// fetch caseNo is caseId not given
-			let caseNo = await contract.caseNo()
-			console.log('current case NO :', caseNo.toNumber())
+			if (data.optData === 'new') {
+				let caseNo = await contract.caseNo()
+				console.log('current case NO :', caseNo.toNumber())
 
-			// assign caseID (smart contract data) and include it  in json
-			data.caseId = caseNo.toNumber() + 1
-
+				// assign caseID (smart contract data) and include it  in json
+				data.caseId = caseNo.toNumber() + 1
+			}
 			// uplode files to IPFS and add their hash value to json
 			// docName  = pdf files or images
 			const docsCIDs = await pinFileToIPFS(data.docName[0])
@@ -118,7 +147,13 @@ const RegisterCase: React.FC<RegisterCaseProps> = ({ setOpen }) => {
 			const pinnedData = await pinJSONToIPFS(JSON.stringify(data))
 
 			// mint new NFT with that json
-			await handleMint(pinnedData) // if caseId given diffrent func will be used
+			if (data.optData === 'new') {
+				await handleMint(pinnedData) // if caseId given diffrent func will be used
+			} else if (data.optData === 'existing') {
+				await handleExistingMint(pinnedData)
+			}
+			reset({})
+			setSteps(0)
 		}
 	}
 

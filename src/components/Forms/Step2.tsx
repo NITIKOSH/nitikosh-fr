@@ -12,6 +12,7 @@ type RegisterCaseProps = {
 const Step2: React.FC<RegisterCaseProps> = ({ register, watch }) => {
 	const [showTooltip, setShowTooltip] = React.useState(false)
 	const [showTooltip2, setShowTooltip2] = React.useState(false)
+
 	return (
 		<div>
 			<div className='w-[80%]   mx-auto flex flex-col space-y-12  '>
