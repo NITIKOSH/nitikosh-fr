@@ -117,7 +117,7 @@ const Dashboard = () => {
 							</p>
 						</div>
 						<div
-							className='absolute cursor-pointer flex items-center justify-center bottom-4 right-4 h-12 w-12 rounded-full bg-[#7665EE]'
+							className='fixed cursor-pointer flex items-center justify-center bottom-16 right-16 h-12 w-12 rounded-full bg-[#7665EE]'
 							onClick={() => setOpen(true)}
 						>
 							<svg
