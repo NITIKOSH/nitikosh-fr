@@ -1,11 +1,11 @@
-import { Navbar,Hero } from '@/components'
+import { Navbar, Hero } from '@/components'
+import Dashboard from '@/components/Dashboard'
 import Image from 'next/image'
 
 export default function Home() {
-  return (
-    <>
-      <Navbar />
-      <Hero />
-    </>
-  );
+	return (
+		<div className='h-screen w-screen'>
+			<Hero />
+		</div>
+	)
 }

@@ -22,7 +22,7 @@ export async function pinJSONToIPFS(jsonData: string) {
       };
       const pinataData = {
         pinataMetadata: {
-          name: 'MetadataDemo',
+          name: 'NitiKosh',
         },
         pinataContent: jsonData,
       };
@@ -42,7 +42,8 @@ export async function pinJSONToIPFS(jsonData: string) {
 
 
 export async function pinFileToIPFS(file: File) {
-  const pinataUrl = 'https://api.pinata.cloud/pinning/pinFileToIPFS';
+  const pinataUrl = 'https://api.pinata.cloud/pinning/pinFileToIPFS';  
+  
   const pinataHeaders = {
     'Content-Type': 'multipart/form-data',
     pinata_api_key: process.env.NEXT_PUBLIC_PINATA_API_KEY!,
