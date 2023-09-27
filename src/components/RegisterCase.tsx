@@ -50,7 +50,7 @@ const RegisterCase: React.FC<RegisterCaseProps> = ({ setOpen }) => {
 			) {
 				return
 			} else if (
-				formData.optData === 'new' &&
+				formData.optData === 'existing' &&
 				(formData.caseId === '' || formData.caseId === undefined)
 			) {
 				return
@@ -92,7 +92,7 @@ const RegisterCase: React.FC<RegisterCaseProps> = ({ setOpen }) => {
 		}
 	}
 
-	const handleExistingMint = async (pinnedData: any) => {
+	const handleExistingMint = async (pinnedData: any, caseId: number) => {
 		if (!signer || !contract) {
 			console.error('Signer or contract is undefined')
 			return
@@ -102,7 +102,7 @@ const RegisterCase: React.FC<RegisterCaseProps> = ({ setOpen }) => {
 			// Mint the NFT
 			const mintedId = await mintSubCase(
 				{ provider, signer, contract, userAdd },
-				pinnedData.caseId,
+				caseId,
 				pinnedData
 			)
 			console.log('New Case Initiated with NFTID ', mintedId)
@@ -123,6 +123,8 @@ const RegisterCase: React.FC<RegisterCaseProps> = ({ setOpen }) => {
 
 				// assign caseID (smart contract data) and include it  in json
 				data.caseId = caseNo.toNumber() + 1
+			} else {
+				data.caseId = parseInt(data.caseId)
 			}
 			// uplode files to IPFS and add their hash value to json
 			// docName  = pdf files or images
@@ -150,7 +152,7 @@ const RegisterCase: React.FC<RegisterCaseProps> = ({ setOpen }) => {
 			if (data.optData === 'new') {
 				await handleMint(pinnedData) // if caseId given diffrent func will be used
 			} else if (data.optData === 'existing') {
-				await handleExistingMint(pinnedData)
+				await handleExistingMint(pinnedData, data.caseId)
 			}
 			reset({})
 			setSteps(0)
