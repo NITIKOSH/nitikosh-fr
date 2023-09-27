@@ -1,6 +1,6 @@
 import { ethers } from "ethers";
 import contractABI from "../../abis/Nitikosh.json";
-import { useState } from "react";
+import { useState,useEffect } from "react";
 
 export async function connectWallet() {
   
@@ -22,17 +22,6 @@ export async function connectWallet() {
       console.log("Wallet connected!");
 
       const provider = new ethers.providers.Web3Provider(window.ethereum);
-      const signer = provider.getSigner();
-
-      // Create a contract instance
-      const contractAddress = process.env.NEXT_PUBLIC_CONT_ADD!;
-      const contract = new ethers.Contract(
-        contractAddress,
-        contractABI,
-        signer
-      );
-      // console.log("contract",contract);
-
       let accounts = await provider.send("eth_requestAccounts", []);
       let userAddress: string = accounts[0];
 
@@ -42,8 +31,6 @@ export async function connectWallet() {
 
       return {
         provider,
-        signer,
-        contract,
         userAdd: userAddress,
       };
 
@@ -55,11 +42,65 @@ export async function connectWallet() {
   }
 }
 
+export interface Web3Connect{
+  provider: ethers.providers.Web3Provider | undefined;
+  userAdd: string | undefined;
+}
+
 export interface Web3State{
   provider: ethers.providers.Web3Provider | undefined;
   signer: ethers.Signer | undefined;
   contract: ethers.Contract | undefined;
   userAdd: string | undefined;
+}
+
+export function useWeb3State(): Web3State {
+
+  const [web3State, setWeb3State] = useState<Web3State>({
+    provider: undefined,
+    signer: undefined,
+    contract: undefined,
+    userAdd: ""
+  });
+
+
+  useEffect(() => {
+    const initializeWeb3 = async () => {
+      try {
+        // Check if MetaMask is installed
+        if (window.ethereum) {
+          // Create a new provider and signer
+          const provider = new ethers.providers.Web3Provider(window.ethereum);
+          const signer = provider.getSigner();
+
+          // Create a contract instance
+          const contractAddress = process.env.NEXT_PUBLIC_CONT_ADD!;
+          const contract = new ethers.Contract(contractAddress, contractABI, signer);
+          // console.log("contract",contract);
+
+          let accounts = await provider.send("eth_requestAccounts", []);
+          let userAddress: string = accounts[0];
+
+          // Update the web3 state
+          setWeb3State({
+            provider,
+            signer,
+            contract,
+            userAdd: userAddress,
+          });
+          
+        } else {
+          console.error('No wallet found!');
+        }
+      } catch (error) {
+        console.error('Failed to initialize web3:', error);
+      }
+    };
+
+    initializeWeb3();
+  }, []);
+
+  return web3State;
 }
 
 // Mint/register a new case
@@ -75,8 +116,8 @@ export async function mintCase(web3State: Web3State, linkHash: string) {
       .mintNewCase(linkHash);
     const receipt = await mintTx.wait();
 
-    const tokenId = receipt.events?.[0]?.args?.[1]?.toNumber();
-    const caseNo = receipt.events?.[0]?.args?.[2]?.toNumber();
+    const tokenId = receipt.events?.[2].args?.[0].toNumber();
+    const caseNo = receipt.events?.[2].args?.[1].toNumber();
 
     console.log(
       "New case is registered with case NO and TokenId",

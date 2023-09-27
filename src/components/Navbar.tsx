@@ -5,7 +5,7 @@ import Image from 'next/image'
 import { identicon, logo, search, wallent } from '@/assets'
 import { useState } from 'react'
 import { ethers } from 'ethers'
-import { connectWallet,Web3State } from './Web3/web3state'
+import { connectWallet,Web3Connect } from './Web3/web3state'
 
 export interface web3DataType {
 	provider: ethers.providers.Web3Provider | undefined;
@@ -16,7 +16,7 @@ export interface web3DataType {
 
 const Navbar = () => {
 	const router = useRouter()
-	const [web3Data, setWeb3Data] = useState<Web3State>()
+	const [web3Data, setWeb3Data] = useState<Web3Connect>()
 
 	const handleConnect = async () => {
 		let _web3Data = await connectWallet();
