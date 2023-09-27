@@ -13,8 +13,9 @@ import { pinFileToIPFS, pinJSONToIPFS } from './Web3/pinata'
 
 type RegisterCaseProps = {
 	setOpen: Dispatch<SetStateAction<boolean>>
+	setCount: Dispatch<SetStateAction<number>>
 }
-const RegisterCase: React.FC<RegisterCaseProps> = ({ setOpen }) => {
+const RegisterCase: React.FC<RegisterCaseProps> = ({ setOpen, setCount }) => {
 	const [steps, setSteps] = React.useState(0)
 	const [cases, setCases] = React.useState<String>('')
 
@@ -119,6 +120,9 @@ const RegisterCase: React.FC<RegisterCaseProps> = ({ setOpen }) => {
 			// fetch caseNo is caseId not given
 			if (data.optData === 'new') {
 				let caseNo = await contract.caseNo()
+				setCount(caseNo)
+				console.log("caseNO" )
+				console.log(caseNo)
 				console.log('current case NO :', caseNo.toNumber())
 
 				// assign caseID (smart contract data) and include it  in json
