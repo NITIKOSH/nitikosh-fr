@@ -1,7 +1,10 @@
 import React from 'react'
 
-function Nav() {
-	return <div className=' bg-slate-600 h-20 w-full'></div>
+type x = {
+	steps: any
+}
+const Nav: React.FC<x> = ({ steps }) => {
+	return <div className=' h-20 w-full'></div>
 }
 
 export default Nav

@@ -8,17 +8,17 @@ import Step3 from './Forms/Step3'
 import Step0 from './Forms/Step0'
 import Nav from './Forms/Nav'
 import { useForm } from 'react-hook-form'
-import { useWeb3State,mintCase } from './Web3/web3state'
-import { pinFileToIPFS, pinJSONToIPFS} from './Web3/pinata'
+import { useWeb3State, mintCase } from './Web3/web3state'
+import { pinFileToIPFS, pinJSONToIPFS } from './Web3/pinata'
 
 type RegisterCaseProps = {
-	setOpen: Dispatch<SetStateAction<boolean>>,
+	setOpen: Dispatch<SetStateAction<boolean>>
 }
 const RegisterCase: React.FC<RegisterCaseProps> = ({ setOpen }) => {
 	const [steps, setSteps] = React.useState(0)
 	const [cases, setCases] = React.useState<String>('')
 
-	const {contract,signer,provider,userAdd}= useWeb3State();
+	const { contract, signer, provider, userAdd } = useWeb3State()
 
 	const {
 		register,
@@ -27,76 +27,99 @@ const RegisterCase: React.FC<RegisterCaseProps> = ({ setOpen }) => {
 		watch,
 	} = useForm()
 
+	const formData = watch()
+
 	const handleBack = () => {
 		if (steps === 0) return
 		setSteps(steps - 1)
 	}
 
 	const handleNext = () => {
+		console.log(formData)
 		if (steps === 3) return
-		setSteps(steps + 1)
+		if (steps == 1) {
+			if (
+				formData.caseType === '' ||
+				formData.caseType === undefined ||
+				formData.caseName === '' ||
+				formData.caseNumber === ''
+			) {
+				return
+			} else {
+				setSteps(steps + 1)
+			}
+		} else if (steps == 2) {
+			if (
+				formData.docType === '' ||
+				formData.docType === undefined ||
+				formData.docName.length === 0 ||
+				formData.evidImage.length === 0 ||
+				formData.evidVideo.length === 0
+			) {
+				return
+			} else {
+				setSteps(steps + 1)
+			}
+		} else {
+			setSteps(steps + 1)
+		}
 	}
 
-
-
-	const handleMint = async (pinnedData:any) => {
+	const handleMint = async (pinnedData: any) => {
 		if (!signer || !contract) {
-		  console.error('Signer or contract is undefined');
-		  return;
+			console.error('Signer or contract is undefined')
+			return
 		}
-	
-		try {
-		  // Mint the NFT
-		  const mintedId = await mintCase( {provider,signer,contract,userAdd}, pinnedData);  
-		  console.log("New Case Initiated with NFTID ",mintedId);
-	
-		} catch (error) {
-		  console.error('Failed to mint NFT:', error);
-	
-		}
-	  };
 
-	const onSubmit = async(data: any) => {
-		console.log("Form data ",data);
-		if(contract){
-			
+		try {
+			// Mint the NFT
+			const mintedId = await mintCase(
+				{ provider, signer, contract, userAdd },
+				pinnedData
+			)
+			console.log('New Case Initiated with NFTID ', mintedId)
+		} catch (error) {
+			console.error('Failed to mint NFT:', error)
+		}
+	}
+
+	const onSubmit = async (data: any) => {
+		console.log(data)
+		if (!data.caseDesc) return // if caseDes is empty return
+		if (contract) {
 			// if condition that caseID is in data or not accordingly func call happen
-			
 			// fetch caseNo is caseId not given
-			let caseNo = await contract.caseNo();
-			// console.log("current case NO :",caseNo.toNumber());
-			
+			let caseNo = await contract.caseNo()
+			console.log('current case NO :', caseNo.toNumber())
+
 			// assign caseID (smart contract data) and include it  in json
-			data.caseId = caseNo.toNumber() +1;
+			data.caseId = caseNo.toNumber() + 1
 
 			// uplode files to IPFS and add their hash value to json
 			// docName  = pdf files or images
-			const docsCIDs = await pinFileToIPFS(data.docName[0]);
+			const docsCIDs = await pinFileToIPFS(data.docName[0])
 			// console.log(docsCIDs);
 			data.docsCIDs = docsCIDs
 			// // evidImages = images
-			const evidImagesCIDs = await pinFileToIPFS(data.evidImage[0]);
+			const evidImagesCIDs = await pinFileToIPFS(data.evidImage[0])
 			// console.log(evidImagesCIDs)
 			data.evidImagesCIDs = evidImagesCIDs
 			// // // evidVideos = videos
-			const evidVideosCIDs = await pinFileToIPFS(data.evidVideo[0]);
+			const evidVideosCIDs = await pinFileToIPFS(data.evidVideo[0])
 			// console.log(evidVideosCIDs)
 			data.evidVideosCIDs = evidVideosCIDs
 
 			// // // create final json
-			delete data.docName;
-			delete data.evidImage;
-			delete data.evidVideo;
+			delete data.docName
+			delete data.evidImage
+			delete data.evidVideo
 
 			// uplode the json and fetch the hash
-			const pinnedData = await pinJSONToIPFS(JSON.stringify(data));
+			const pinnedData = await pinJSONToIPFS(JSON.stringify(data))
 
 			// mint new NFT with that json
-			await handleMint(pinnedData);  // if caseId given diffrent func will be used
-
+			await handleMint(pinnedData) // if caseId given diffrent func will be used
 		}
-
-
 	}
 
 	const FormReturn = (steps: any) => {
@@ -176,7 +199,7 @@ const RegisterCase: React.FC<RegisterCaseProps> = ({ setOpen }) => {
 						/>
 					</svg>
 				</div>
-				{steps > 0 && <Nav />}
+				{steps > 0 && <Nav steps={steps} />}
 
 				<div className='h-full w-full'>
 					<form
