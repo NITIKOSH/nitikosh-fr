@@ -40,21 +40,7 @@ const Step2: React.FC<RegisterCaseProps> = ({ register, watch }) => {
 								className='outline-none w-full bg-transparent text-[#211d3d72] font-open-sans font-light '
 								type='file'
 							/>
-							<Image
-								src={iIcon}
-								alt='icon'
-								width={20}
-								height={20}
-								className='cursor-pointer'
-								onMouseEnter={() => setShowTooltip2(true)}
-								onMouseLeave={() => setShowTooltip2(false)}
-							/>
-							{showTooltip2 && (
-								<div className='  text-xs  font-extralight text-[#00000067] px-2 py-1 shadow bg-white rounded absolute right-10 top-10 z-10'>
-									Enter unique identification <br /> number
-									assigned to the case
-								</div>
-							)}
+							
 						</div>
 					</div>
 					{/* ///////// */}
@@ -74,21 +60,7 @@ const Step2: React.FC<RegisterCaseProps> = ({ register, watch }) => {
 							className='outline-none w-full bg-transparent text-[#211d3d72] font-open-sans font-light'
 							type='file'
 						/>
-						<Image
-							src={iIcon}
-							alt='icon'
-							width={20}
-							height={20}
-							className='cursor-pointer'
-							onMouseEnter={() => setShowTooltip2(true)}
-							onMouseLeave={() => setShowTooltip2(false)}
-						/>
-						{showTooltip2 && (
-							<div className='  text-xs  font-extralight text-[#00000067] px-2 py-1 shadow bg-white rounded absolute right-10 top-10 z-10'>
-								Enter unique identification <br /> number
-								assigned to the case
-							</div>
-						)}
+						
 					</div>
 					{/* ////// */}
 
@@ -104,21 +76,6 @@ const Step2: React.FC<RegisterCaseProps> = ({ register, watch }) => {
 							className='outline-none w-full bg-transparent text-[#211d3d72] font-open-sans font-light'
 							type='file'
 						/>
-						<Image
-							src={iIcon}
-							alt='icon'
-							width={20}
-							height={20}
-							className='cursor-pointer'
-							onMouseEnter={() => setShowTooltip2(true)}
-							onMouseLeave={() => setShowTooltip2(false)}
-						/>
-						{showTooltip2 && (
-							<div className='  text-xs  font-extralight text-[#00000067] px-2 py-1 shadow bg-white rounded absolute right-10 top-10 z-10'>
-								Enter unique identification <br /> number
-								assigned to the case
-							</div>
-						)}
 					</div>
 				</div>
 			</div>

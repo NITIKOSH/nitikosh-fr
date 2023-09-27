@@ -9,9 +9,6 @@ type RegisterCaseProps = {
 }
 
 const Step1: React.FC<RegisterCaseProps> = ({ register, watch }) => {
-	const [showTooltip, setShowTooltip] = React.useState(false)
-	const [showTooltip2, setShowTooltip2] = React.useState(false)
-
 	return (
 		<div className=''>
 			<div className='flex flex-col h-full w-[80%] mx-auto  justify-center items-center space-y-8 mt-20'>
@@ -23,21 +20,6 @@ const Step1: React.FC<RegisterCaseProps> = ({ register, watch }) => {
 						id='caseId'
 						className='outline-none w-full bg-transparent text-[#211d3d72] font-open-sans font-light'
 					/>
-					<Image
-						src={iIcon}
-						alt='icon'
-						width={20}
-						height={20}
-						className='cursor-pointer'
-						onMouseEnter={() => setShowTooltip(true)}
-						onMouseLeave={() => setShowTooltip(false)}
-					/>
-					{showTooltip && (
-						<div className=' text-xs  font-extralight px-2 py-1 shadow bg-white rounded absolute right-10 top-10 z-10 text-[#00000067]'>
-							Provide a descriptive and <br /> concise title for
-							the case
-						</div>
-					)}
 				</div>
 				<div className='border border-1 px-8 py-4 w-full mx-auto rounded-xl flex relative'>
 					<input
@@ -47,21 +29,6 @@ const Step1: React.FC<RegisterCaseProps> = ({ register, watch }) => {
 						id='caseName'
 						className='outline-none w-full bg-transparent text-[#211d3d72] font-open-sans font-light'
 					/>
-					<Image
-						src={iIcon}
-						alt='icon'
-						width={20}
-						height={20}
-						className='cursor-pointer'
-						onMouseEnter={() => setShowTooltip(true)}
-						onMouseLeave={() => setShowTooltip(false)}
-					/>
-					{showTooltip && (
-						<div className=' text-xs  font-extralight px-2 py-1 shadow bg-white rounded absolute right-10 top-10 z-10 text-[#00000067]'>
-							Provide a descriptive and <br /> concise title for
-							the case
-						</div>
-					)}
 				</div>
 				<div className=' flex flex-row w-full space-x-6'>
 					<div className='border border-1 px-8 py-4 basis-2/5  rounded-xl flex relative'>
@@ -72,22 +39,8 @@ const Step1: React.FC<RegisterCaseProps> = ({ register, watch }) => {
 							id='caseNumber'
 							className='outline-none w-full bg-transparent text-[#211d3d72] font-open-sans font-light'
 						/>
-						<Image
-							src={iIcon}
-							alt='icon'
-							width={20}
-							height={20}
-							className='cursor-pointer'
-							onMouseEnter={() => setShowTooltip2(true)}
-							onMouseLeave={() => setShowTooltip2(false)}
-						/>
-						{showTooltip2 && (
-							<div className='  text-xs  font-extralight text-[#00000067] px-2 py-1 shadow bg-white rounded absolute right-10 top-10 z-10'>
-								Enter unique identification <br /> number
-								assigned to the case
-							</div>
-						)}
 					</div>
+
 					<div className='basis-3/5  text-[#211d3d72] shadow-lg rounded-xl  outline-none px-4'>
 						<select
 							{...register('caseType')}

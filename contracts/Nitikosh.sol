@@ -1,5 +1,5 @@
-// // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.9;
+// SPDX-License-Identifier: MIT
+ pragma solidity ^0.8.9;
 
 // import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
 // import "@openzeppelin/contracts/utils/Counters.sol";
@@ -11,6 +11,7 @@ pragma solidity ^0.8.9;
 //     address  public owner; 
 //     uint public caseNo = 0;
 //     mapping (uint=>uint[]) public cases;
+//     mapping(address=>uint[]) public agentcase;
 
 
 //     // Event for new case minted
@@ -28,6 +29,7 @@ pragma solidity ^0.8.9;
 //         _setTokenURI(tokenId, uri);
 //         caseNo++;
 //         cases[caseNo].push(tokenId);
+//         agentcase[msg.sender].push(caseNo);
 //         emit CaseMinted(tokenId, caseNo, uri);
 //     }
 
@@ -57,6 +59,9 @@ pragma solidity ^0.8.9;
 //     require(_caseNo > 0 && _caseNo <= caseNo, "Invalid case number");
 //     return cases[_caseNo];
 // }
+// function getUserCases(address _lawer) public view returns (uint[] memory) {
+//     return agentcase[_lawer];
+// }
 
 //     function supportsInterface(bytes4 interfaceId)
 //         public
@@ -69,6 +74,6 @@ pragma solidity ^0.8.9;
 // }
 
 
-//deployed at : 0x402527B7F90f17b2a40184A078191ade95DDc5EA
+//deployed at : 0x0A841f3C592AF88A10D69EFcF5b7b0aBd5c5A752
 // by : 0xABCa9eD477d1e84db4f17B6155A429E643bd13784
 // chain : polygon mumbai

@@ -31,20 +31,7 @@ const Step3: React.FC<RegisterCaseProps> = ({ register, watch }) => {
 						className='outline-none w-full bg-transparent text-[#211d3d72] font-open-sans font-light resize-none'
 						rows={5}
 					/>
-					<Image
-						src={iIcon}
-						alt='icon'
-						width={20}
-						height={20}
-						className='cursor-pointer '
-						onMouseEnter={() => setShowTooltip(true)}
-						onMouseLeave={() => setShowTooltip(false)}
-					/>
-					{showTooltip && (
-						<div className=' text-xs  font-extralight px-2 py-1 shadow bg-white rounded absolute right-10 top-10 z-10 text-[#00000067]'>
-							Provide a descriptive <br /> detail of the case
-						</div>
-					)}
+					
 				</div>
 				{/* //// */}
 				{/* <textarea
@@ -63,20 +50,7 @@ const Step3: React.FC<RegisterCaseProps> = ({ register, watch }) => {
 						className='outline-none w-full bg-transparent text-[#211d3d72] font-open-sans font-light resize-none'
 						rows={3}
 					/>
-					<Image
-						src={iIcon}
-						alt='icon'
-						width={20}
-						height={20}
-						className='cursor-pointer'
-						onMouseEnter={() => setShowTooltip2(true)}
-						onMouseLeave={() => setShowTooltip2(false)}
-					/>
-					{showTooltip2 && (
-						<div className=' text-xs  font-extralight px-2 py-1 shadow bg-white rounded absolute right-10 top-10 z-10 text-[#00000067]'>
-							Provide additional <br /> information about the case
-						</div>
-					)}
+					
 				</div>
 				{/* /// */}
 			</div>
