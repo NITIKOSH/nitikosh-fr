@@ -8,7 +8,7 @@ const Nav: React.FC<x> = ({ steps }) => {
 		<div className=' h-20 w-full border-b-[1px] border-[#211D3D80]'>
 			<div className='flex flex-row h-full'>
 				<div
-					className={`h-full justify-center items-center w-1/4 flex flex-row ${
+					className={`h-full justify-center items-center w-1/3 flex flex-row ${
 						steps === 1 && 'border-b-2 border-primary bg-[#F2F0FF]'
 					}`}
 				>
@@ -41,7 +41,7 @@ const Nav: React.FC<x> = ({ steps }) => {
 					<div className='py-3 pl-3 pr-5'>Case Information</div>
 				</div>
 				<div
-					className={`h-full justify-center  w-1/4 flex flex-row ${
+					className={`h-full justify-center  w-1/3 flex flex-row ${
 						steps === 2 && 'border-b-2 border-primary bg-[#F2F0FF]'
 					}`}
 				>
@@ -74,7 +74,7 @@ const Nav: React.FC<x> = ({ steps }) => {
 					<div className='py-3 pl-3 pr-5'>Case Documentation</div>
 				</div>
 				<div
-					className={`h-full justify-center  w-1/4 flex flex-row ${
+					className={`h-full justify-center  w-1/3 flex flex-row ${
 						steps === 3 && 'border-b-2 border-primary bg-[#F2F0FF]'
 					}`}
 				>
