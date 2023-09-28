@@ -106,39 +106,6 @@ const Nav: React.FC<x> = ({ steps }) => {
 					</div>
 					<div className='py-3 pl-3 pr-5'>Case Details</div>
 				</div>
-				<div
-					className={`h-full justify-center  w-1/4 flex flex-row ${
-						steps === 4 && 'border-b-2 border-primary bg-[#F2F0FF]'
-					}`}
-				>
-					<div className='py-3 pl-5'>
-						<div
-							className={`w-6 h-6 border-2 p-[1px]  border-purple/50 ${
-								steps > 4 && 'border-purple'
-							} rounded-full `}
-						>
-							{steps > 4 && (
-								<div className='bg-purple rounded-full h-full w-full flex items-center  justify-center'>
-									<svg
-										xmlns='http://www.w3.org/2000/svg'
-										fill='none'
-										viewBox='0 0 24 24'
-										strokeWidth={1.5}
-										stroke='white'
-										className='w-3 h-3'
-									>
-										<path
-											strokeLinecap='round'
-											strokeLinejoin='round'
-											d='M4.5 12.75l6 6 9-13.5'
-										/>
-									</svg>
-								</div>
-							)}
-						</div>
-					</div>
-					<div className='py-3 pl-3 pr-5'>Review & Submit</div>
-				</div>
 			</div>
 			<div className='hidden'></div>
 		</div>
