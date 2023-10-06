@@ -13,7 +13,7 @@ import { pinFileToIPFS, pinJSONToIPFS } from "./Web3/pinata";
 
 const RegisterCase = ({ setOpen }) => {
   const [steps, setSteps] = React.useState(0);
-  const [cases, setCases] = React.useState < String > "";
+  const [cases, setCases] = React.useState("");
 
   const { contract, signer, provider, userAdd } = useWeb3State();
 
@@ -225,7 +225,12 @@ const RegisterCase = ({ setOpen }) => {
 
         <div className="h-full w-full">
           <form onSubmit={handleSubmit(onSubmit)} className="h-full w-full">
-            <FormReturn steps={steps} />
+            {steps === 0 && (
+              <Step0 setCase={setCases} register={register} watch={watch} />
+            )}
+            {steps === 1 && <Step1 register={register} watch={watch} />}
+            {steps === 2 && <Step2 register={register} watch={watch} />}
+            {steps === 3 && <Step3 register={register} watch={watch} />}
             <button className="hidden" id="submitform" type="submit"></button>
           </form>
         </div>
